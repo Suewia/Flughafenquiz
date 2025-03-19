@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flug-Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f8ff; margin: 0; }
+        .header { background: #007BFF; color: white; padding: 15px; font-size: 24px; }
+        .container { display: flex; }
+        .sidebar { width: 20%; background: #f0f0f0; padding: 15px; min-height: 100vh; text-align: left; }
+        .content { width: 60%; padding: 20px; }
+        .quiz-container { max-width: 600px; margin: 20px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        .question { font-size: 20px; margin-bottom: 15px; }
+        .option { display: block; width: 100%; margin: 5px 0; padding: 10px; background: #007BFF; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        .option:hover { background: #0056b3; }
+        .result { font-size: 22px; font-weight: bold; margin-top: 20px; }
+        .footer { background: #007BFF; color: white; padding: 10px; position: relative; bottom: 0; width: 100%; text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="header">🎉 Flug-Quiz zur Polterfeier ✈️</div>
+    <div class="container">
+        <div class="sidebar">
+            <h3>Menü</h3>
+            <ul>
+                <li><a href="#" onclick="location.reload()">Quiz neu starten</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="quiz-container">
+                <h2>Flug-Quiz</h2>
+                <div id="quiz">
+                    <p class="question"></p>
+                    <button class="option" onclick="checkAnswer(0)"></button>
+                    <button class="option" onclick="checkAnswer(1)"></button>
+                    <button class="option" onclick="checkAnswer(2)"></button>
+                </div>
+                <p class="result" id="result"></p>
+            </div>
+        </div>
+    </div>
+    <div class="footer">© 2025 Flug-Quiz | Erstellt für die Polterfeier</div>
+
+    <script>
+        const questions = [
+            { question: "Welcher Flughafen hat den Code 'LHR'?", options: ["London Heathrow", "Los Angeles", "Lissabon"], answer: 0 },
+            { question: "Welcher Flughafen hat den Code 'CDG'?", options: ["Chicago O’Hare", "Paris Charles de Gaulle", "Madrid Barajas"], answer: 1 },
+            { question: "In welcher Stadt liegt der Flughafen 'El Prat'?", options: ["Madrid", "Barcelona", "Lissabon"], answer: 1 }
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        
+        function loadQuestion() {
+            document.querySelector('.question').textContent = questions[currentQuestion].question;
+            document.querySelectorAll('.option').forEach((btn, index) => {
+                btn.textContent = questions[currentQuestion].options[index];
+            });
+        }
+        
+        function checkAnswer(index) {
+            if (index === questions[currentQuestion].answer) {
+                score++;
+            }
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                document.getElementById('quiz').style.display = 'none';
+                document.getElementById('result').textContent = `Spiel beendet! Dein Punktestand: ${score} / ${questions.length}`;
+            }
+        }
+        
+        loadQuestion();
+    </script>
+</body>
+</html>
